@@ -19,7 +19,7 @@ exports.uploadImg = async (req, res) => {
 
   // Convert the Buffer to a readable stream using streamifier
   const fileStream = streamifier.createReadStream(file.buffer);
-
+  
   const fileUpload = bucket.file(file.originalname); // You can adjust the destination file name as needed
 
   const writeStream = fileUpload.createWriteStream({

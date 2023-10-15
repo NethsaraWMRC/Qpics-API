@@ -88,3 +88,13 @@ exports.loginUser = async (req, res) =>{
       }
     
 }
+
+exports.getUser = async (req,res)=>{
+  try{
+    const currentUser = await User.findOne({_id:req.user.user_id});
+    res.json(currentUser);
+  }catch(err){
+    res.json(err)
+  }
+}
+
