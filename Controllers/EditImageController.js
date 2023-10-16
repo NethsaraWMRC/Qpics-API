@@ -1,4 +1,6 @@
 const ImageData = require('../models/Image')
+const admin = require("firebase-admin");
+const path = require('path');
 
 exports.updateImage = async (req, res)=>{
     try{
@@ -25,18 +27,26 @@ exports.updateImage = async (req, res)=>{
 exports.deleteImage = async (req, res)=>{
     try{
         const imageId = req.params.imageId;
+        const currentImage = await ImageData.findById(imageId);
 
-        const currentImage = await ImageData.findByIdAndDelete(imageId).then(()=>{
+        await ImageData.findByIdAndDelete(imageId).then(()=>{
             res.status(200).send({status:"image is deleted"})
         }).catch((err)=>{
             console.log(err);
             res.status(500).send({status:"error with delete record", error:err.message})
         })
 
+        //  // Delete the corresponding image file from Firebase Storage
+        //  const bucket = admin.storage().bucket();
+        //  const file = bucket.file(path.basename(currentImage.imageUrl)); // Assuming imageUrl is the full path
+ 
+        //  // Use the delete method to remove the file from Firebase Storage
+        //  await file.delete();
+
 
     }catch (error) {
         console.error("Error:", error);
-        res.status(500).json({ error: 'An error occurred' });
+        res.status(500);
     }
 }
 
