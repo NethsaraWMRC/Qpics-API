@@ -36,7 +36,7 @@ exports.regUser = async (req, res) => {
     // const cookieToken = req.cookies.token;
 
     // res.status(201).json({ message: 'Registration Successful'});
-  } catch {
+  } catch (err) {
     if (err.code === 11000) {
       res.status(400).json({ message: "Email address is already in use." });
     } else {
@@ -88,5 +88,21 @@ exports.getUser = async (req, res) => {
     res.json(currentUser);
   } catch (err) {
     res.json(err);
+  }
+};
+
+exports.updateUser = async (req, res) => {
+  try {
+    const { username, proPic } = req.body;
+    const { user_id } = req.user;
+
+    const user = await User.findByIdAndUpdate(user_id, {
+      username,
+      proPic,
+    });
+
+    return res.status(201).json("User updated successfull.");
+  } catch (error) {
+    res.status(500).json(err.message);
   }
 };
