@@ -46,5 +46,5 @@ connection.once("open", () => {
 });
 
 app.listen(PORT, () => {
-  console.log("server is running...");
+  console.log("server is running...", PORT);
 });

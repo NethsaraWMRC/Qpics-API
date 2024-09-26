@@ -6,7 +6,11 @@ const {
   updateUser,
 } = require("../Controllers/UserController");
 const { uploadImg } = require("../Controllers/ImageController");
-const { profile } = require("../Controllers/ProfilesController");
+const {
+  profile,
+  updateProImage,
+  getProImage,
+} = require("../Controllers/ProfilesController");
 const { home } = require("../Controllers/HomeController");
 const {
   updateImage,
@@ -36,6 +40,8 @@ router.post("/upload", auth, upload.single("image"), uploadImg);
 
 //get images into profile
 router.get("/profile", auth, profile);
+router.get("/fetch-profile-image", auth, getProImage);
+router.put("/update-profile-image", auth, updateProImage);
 
 //get images into homepage
 router.get("/home", home);
